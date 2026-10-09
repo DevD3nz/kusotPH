@@ -32,7 +32,7 @@ npx wrangler pages deploy
 ```
 
 The first time, it asks you to log in and create the `kusotph-site` project.
-Or connect the GitHub repo in the Cloudflare dashboard with **root directory** `kusotphsite`,
+Or connect the GitHub repo (DevD3nz/kusotPH) in the Cloudflare dashboard with **root directory** empty,
 **build command** empty, and **output directory** `public`.
 
 ## After editing

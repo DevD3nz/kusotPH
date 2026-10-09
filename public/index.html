@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KusotPh: laundry shop software for the Philippines</title>
+  <meta name="description" content="KusotPh tells your customers exactly when their laundry will be ready, and texts them the moment it is. Orders, cash drawer, staff and branches, all from the phones your shop already has.">
+  <meta name="theme-color" content="#060b14">
+  <meta name="color-scheme" content="dark">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="KusotPh: no more guessing when the laundry is ready">
+  <meta property="og:description" content="Laundry shop software built by a customer who got tired of asking “Ready na po ba?”">
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/styles.css?v=5">
+  <script type="module" src="/main.js?v=5"></script>
+</head>
+<body>
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="scene-fallback" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="nav" id="nav">
+    <a class="brand" href="#top" aria-label="KusotPh home">
+      <img src="/favicon.svg" alt="" width="32" height="32">
+      <span>Kusot<b>Ph</b></span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#story">The story</a>
+      <a href="#cycle">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-sm" href="#demo">Get a demo</a>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero" data-scene="hero">
+      <div class="wrap hero-inner">
+        <p class="eyebrow reveal"><span class="pulse"></span> Laundry shop software · Made in the Philippines</p>
+        <h1 class="reveal">
+          <span class="line">“Ready na po ba</span>
+          <span class="line">ang laundry ko?”</span>
+        </h1>
+        <p class="lede reveal">
+          Your customers ask it every day, because nobody told them when.
+          KusotPh gives every load a <strong>ready-by time</strong>, a <strong>live status link</strong>,
+          and a <strong>text the moment it's done</strong>. Your counter gets fewer calls and your shelves fewer forgotten bags.
+        </p>
+        <div class="cta-row reveal">
+          <a class="btn" href="#demo">Get a free demo <span aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="#story">Read why I built it</a>
+        </div>
+        <ul class="chips reveal" aria-label="Highlights">
+          <li>Runs on any phone, no POS hardware</li>
+          <li>Cash, GCash &amp; bank payments</li>
+          <li>One shop or many branches</li>
+        </ul>
+      </div>
+      <a class="scroll-cue" href="#story" aria-label="Scroll to the story"><span></span></a>
+    </section>
+
+    <!-- STORY -->
+    <section class="story" id="story" data-scene="story">
+      <div class="wrap">
+        <header class="section-head reveal">
+          <p class="kicker">The story</p>
+          <h2>KusotPh didn't start in an office.<br>It started at a laundry counter, on the customer's side.</h2>
+        </header>
+
+        <ol class="chapters">
+          <li class="chapter reveal" data-scene="story">
+            <span class="chapter-no" aria-hidden="true">01</span>
+            <div class="chapter-body">
+              <h3>“Balikan n'yo na lang po bukas.”</h3>
+              <p>
+                I dropped off a full bag of clothes at my neighborhood laundry shop and paid.
+                I asked when I could get it. <em>“Bukas po siguro, hapon.”</em>
+                Tomorrow, maybe, sometime in the afternoon. No exact time and no number to text.
+                All I had was a small paper stub.
+              </p>
+            </div>
+            <figure class="prop prop-stub" aria-label="A paper claim stub with no time on it">
+              <div class="stub">
+                <span class="stub-title">CLAIM STUB</span>
+                <span class="stub-no">No. 0247</span>
+                <span class="stub-row"><i>Kilos</i><b>4.5</b></span>
+                <span class="stub-row"><i>Ready</i><b class="scribble">bukas?</b></span>
+              </div>
+            </figure>
+          </li>
+
+          <li class="chapter reveal" data-scene="story">
+            <span class="chapter-no" aria-hidden="true">02</span>
+            <div class="chapter-body">
+              <h3>Two trips for one bag.</h3>
+              <p>
+                The next afternoon I walked back. <em>“Dinadryer pa po.”</em> Still drying.
+                Nobody had told me, because nobody could. I went home empty-handed, came back
+                the day after, and went to work in yesterday's shirt.
+                It wasn't the shop's fault. They had no way to reach me.
+              </p>
+            </div>
+            <figure class="prop prop-chat" aria-label="Unanswered messages asking if the laundry is ready">
+              <div class="bubble out">Hi po, ready na po ba yung laundry ko? #0247</div>
+              <div class="bubble out">Hello po? 🙏</div>
+              <div class="bubble meta">Seen · no reply</div>
+            </figure>
+          </li>
+
+          <li class="chapter chapter-turn reveal" data-scene="turn">
+            <span class="chapter-no" aria-hidden="true">03</span>
+            <div class="chapter-body">
+              <p class="turn-kicker">Now look at it from your side of the counter.</p>
+              <h3>Every customer like me costs your shop something.</h3>
+              <ul class="costs">
+                <li><b>A phone call</b> your attendant answers while a load waits to be folded.</li>
+                <li><b>A bag on the shelf</b> that nobody comes back for, taking up space for weeks.</li>
+                <li><b>A customer who quietly tries</b> the shop down the street next time, and never tells you why.</li>
+              </ul>
+              <p>You won't see it in your sales. You'll just have fewer <em>suki</em> than you should.</p>
+            </div>
+          </li>
+
+          <li class="chapter reveal" data-scene="answer">
+            <span class="chapter-no" aria-hidden="true">04</span>
+            <div class="chapter-body">
+              <h3>So I built the shop I wished I'd walked into.</h3>
+              <p>
+                <em>Kusot</em> is how we scrub clothes by hand: simple, hands-on, done by the person at the tub.
+                KusotPh works the same way. Your attendant takes the order on a phone, and from that moment
+                the customer knows what's happening:
+              </p>
+              <ul class="ticks">
+                <li><b>A ready-by time</b> printed on every claim ticket.</li>
+                <li><b>A live receipt link</b> that shows Received → Washing → Drying → Ready.</li>
+                <li><b>A text the moment it's Ready</b>, plus reminders if the bag is still waiting after 3, 7 and 30 days.</li>
+              </ul>
+            </div>
+            <figure class="prop prop-phone" aria-label="A phone showing the order is ready with a text notification">
+              <div class="phone">
+                <div class="notif">
+                  <span class="notif-app">SMS · now</span>
+                  <span>Hi Ana! Your laundry #B1-0247 is <b>READY</b> for pickup. Balance: ₱0.00. Salamat! – KusotPh</span>
+                </div>
+                <div class="track">
+                  <span class="track-title">Order #B1-0247</span>
+                  <ol>
+                    <li class="done">Received</li>
+                    <li class="done">Washing</li>
+                    <li class="done">Drying</li>
+                    <li class="now">Ready</li>
+                  </ol>
+                  <span class="track-ready">Ready by <b>Today, 4:30 PM</b></span>
+                </div>
+              </div>
+            </figure>
+          </li>
+
+          <li class="chapter reveal" data-scene="owner">
+            <span class="chapter-no" aria-hidden="true">05</span>
+            <div class="chapter-body">
+              <h3>Then I built the rest of your shop around it.</h3>
+              <p>
+                Clear updates for customers need clean records behind the counter. So KusotPh also keeps the
+                cash drawer honest, tracks who worked which shift, and lets you see every branch from your phone,
+                without driving between them to ask.
+              </p>
+              <a class="text-link" href="#cycle">See how an order moves <span aria-hidden="true">→</span></a>
+            </div>
+          </li>
+        </ol>
+
+        <aside class="maker reveal" aria-labelledby="maker-title">
+          <div class="maker-avatar" aria-hidden="true">👋</div>
+          <div class="maker-body">
+            <p class="kicker">Who's behind KusotPh</p>
+            <h3 id="maker-title">Just me. One developer, one laundry stub too many.</h3>
+            <p>
+              KusotPh isn't made by a big company. I'm a solo developer, and I built this because I was the customer
+              who never knew when my laundry would be ready. When you message, you talk to the person who wrote
+              the code, and your feedback can show up in the app.
+            </p>
+            <a class="btn btn-fb" href="https://www.facebook.com/D3nzD3vt3st/" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+              Message me on Facebook
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ORDER CYCLE -->
+    <section class="cycle" id="cycle" data-scene="cycle">
+      <div class="wrap">
+        <header class="section-head reveal">
+          <p class="kicker">How it works</p>
+          <h2>One board. Every load. Always in the right stage.</h2>
+          <p class="sub">Your attendants move each order along with a tap. The customer's link updates as they go.</p>
+        </header>
+
+        <ol class="steps">
+          <li class="step tilt reveal" data-color="slate"><span class="step-no">0</span><h3>To collect</h3><p>Home pickup: a rider brings the dirty laundry in.</p></li>
+          <li class="step tilt reveal" data-color="sky"><span class="step-no">1</span><h3>Received</h3><p>Weighed, priced, ticket printed with a ready-by time.</p></li>
+          <li class="step tilt reveal" data-color="teal"><span class="step-no">2</span><h3>Washing</h3><p>In the machine. Flagged <em>Late</em> if the time passes.</p></li>
+          <li class="step tilt reveal" data-color="violet"><span class="step-no">3</span><h3>Drying</h3><p>Almost there. The customer can see it too.</p></li>
+          <li class="step tilt reveal" data-color="amber"><span class="step-no">4</span><h3>Ready</h3><p>Customer gets a text. Reminders after 3, 7, 30 days.</p></li>
+          <li class="step tilt reveal" data-color="green"><span class="step-no">5</span><h3>Claimed / Delivered</h3><p>Released only once the balance is zero.</p></li>
+        </ol>
+
+        <ul class="rules reveal" aria-label="Built-in shop rules">
+          <li>Undo a step within 15 minutes</li>
+          <li>Failed delivery goes back to Ready, attempt counted</li>
+          <li>Cancel only by owner or manager, with a reason</li>
+          <li>Decimal kilos or per piece, plus rush &amp; delivery fees</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="features" data-scene="features">
+      <div class="wrap">
+        <header class="section-head reveal">
+          <p class="kicker">Behind the counter</p>
+          <h2>Everything an owner needs to stop guessing too.</h2>
+        </header>
+
+        <div class="bento">
+          <article class="card card-xl tilt reveal">
+            <h3>Command Center</h3>
+            <p>Collected today, unpaid balances, late orders and cash drawer differences, for every branch, on your phone.</p>
+            <div class="mini-dash" aria-hidden="true">
+              <div class="kpi"><span>Collected</span><b>₱18,420</b></div>
+              <div class="kpi"><span>Unpaid</span><b>₱2,135</b></div>
+              <div class="kpi warn"><span>Late</span><b>3</b></div>
+              <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+          </article>
+
+          <article class="card tilt reveal">
+            <h3>Cash drawer that adds up</h3>
+            <p>Opening cash + cash payments − drawer expenses, against what was counted. Any difference shows up on your dashboard.</p>
+            <div class="drawer" aria-hidden="true">
+              <span><i>Expected</i><b>₱4,820</b></span>
+              <span><i>Counted</i><b>₱4,480</b></span>
+              <span class="short"><i>Short</i><b>−₱340</b></span>
+            </div>
+          </article>
+
+          <article class="card tilt reveal">
+            <h3>Staff PIN &amp; timecards</h3>
+            <p>Attendants clock in with a PIN. The hours report estimates pay from each person's hourly or daily rate.</p>
+          </article>
+
+          <article class="card tilt reveal">
+            <h3>Riders</h3>
+            <p>Assigned pickups and deliveries, cash on delivery, and failed attempts sent back to Ready.</p>
+          </article>
+
+          <article class="card tilt reveal">
+            <h3>Claim tickets</h3>
+            <p>Print on 58mm or 80mm thermal paper, or A6. Ready-by time and balance on every ticket.</p>
+          </article>
+
+          <article class="card tilt reveal">
+            <h3>SMS updates</h3>
+            <p>Ready notices and unclaimed reminders, sent automatically. An optional add-on.</p>
+          </article>
+
+          <article class="card tilt reveal">
+            <h3>Owner timeline</h3>
+            <p>Who released, voided, cancelled or undid what, and when. Every change has a name on it.</p>
+          </article>
+
+          <article class="card tilt reveal">
+            <h3>Expenses &amp; inventory</h3>
+            <p>LPG, detergent, salaries. Mark counter purchases as paid from the drawer so the count stays right.</p>
+          </article>
+        </div>
+
+        <div class="roles reveal">
+          <p>Made for everyone in the shop:</p>
+          <ul>
+            <li><b>Owner</b> sees everything</li>
+            <li><b>Manager</b> runs their branches</li>
+            <li><b>Attendant</b> takes orders &amp; payments</li>
+            <li><b>Rider</b> pickups &amp; deliveries</li>
+            <li><b>Customer</b> ticket, link &amp; texts</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETUP -->
+    <section class="editions" data-scene="features">
+      <div class="wrap">
+        <div class="edition edition-hi tilt reveal">
+          <div>
+            <p class="kicker">Your own system</p>
+            <h2>Set up for your laundry business only.</h2>
+            <p>KusotPh is installed for your shop, not shared with anyone else's. One shop or several branches, under one owner account.</p>
+          </div>
+          <ul class="ticks">
+            <li>Your shop's data, separate from other businesses</li>
+            <li>I set it up with your branches, staff and price list</li>
+            <li>Your team signs in from any phone</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMO FORM -->
+    <section class="demo" id="demo" data-scene="demo">
+      <div class="wrap demo-grid">
+        <div class="demo-copy reveal">
+          <p class="kicker">Get a demo</p>
+          <h2>Let your customers stop asking.</h2>
+          <p>
+            Message me on Facebook and tell me about your shop. I'll walk you through KusotPh
+            using your own price list, on a phone, in about 20 minutes. Taglish is fine.
+          </p>
+          <ul class="ticks">
+            <li>Free, no commitment</li>
+            <li>You talk to me directly, the developer who built it</li>
+            <li>Works for one shop or many branches</li>
+          </ul>
+          <a class="btn btn-fb btn-lg" href="https://www.facebook.com/D3nzD3vt3st/" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+            Message me for a demo
+          </a>
+        </div>
+
+        <figure class="chat-card reveal" aria-label="Example message asking for a demo">
+          <div class="chat-head">
+            <span class="chat-avatar" aria-hidden="true">👋</span>
+            <span><b>KusotPh</b><i>Facebook Messenger</i></span>
+          </div>
+          <div class="chat-body">
+            <p class="msg msg-in">Hi po! Gusto ko po sanang makita yung KusotPh. May laundry shop po kami, 2 branches.</p>
+            <p class="msg msg-out">Hello! Sure po 😊 Ano pong oras kayo free? I'll show you on your phone using your own price list.</p>
+            <p class="msg-hint">Tip: say how many branches you have and if you do home pickup.</p>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq" data-scene="demo">
+      <div class="wrap narrow">
+        <header class="section-head reveal">
+          <p class="kicker">Questions</p>
+          <h2>Before you ask.</h2>
+        </header>
+        <details class="reveal"><summary>Do I need a computer or a POS machine?</summary><p>No. KusotPh runs in the browser on any phone or tablet and can be installed to the home screen like an app. A thermal printer is optional, for claim tickets.</p></details>
+        <details class="reveal"><summary>How do customers get the text when their laundry is ready?</summary><p>Through the SMS add-on. Once it's switched on for your shop, KusotPh texts customers when their order reaches Ready and reminds them if it's still unclaimed after 3, 7 and 30 days.</p></details>
+        <details class="reveal"><summary>Does it take GCash payments?</summary><p>KusotPh records payments made by cash, GCash, bank transfer or other methods against each order, including deposits and cash on delivery. It is not a payment gateway; your customers pay you directly the way they do now.</p></details>
+        <details class="reveal"><summary>I have more than one branch. Will it work?</summary><p>Yes. Each branch has its own orders, cash drawer and staff, and the owner sees all of them together in the Command Center.</p></details>
+        <details class="reveal"><summary>My attendants aren't techy.</summary><p>The order board is built for the counter: big buttons, PIN login, one tap to move a load to the next stage. I'll walk your team through it during setup.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <a class="brand" href="#top"><img src="/favicon.svg" alt="" width="28" height="28"><span>Kusot<b>Ph</b></span></a>
+      <p>Built by a solo developer who got tired of asking “Ready na po ba?”</p>
+      <a class="footer-fb" href="https://www.facebook.com/D3nzD3vt3st/" target="_blank" rel="noopener noreferrer">Message me on Facebook →</a>
+      <p class="fine">© <span id="year">2026</span> KusotPh · Philippines</p>
+    </div>
+  </footer>
+</body>
+</html>

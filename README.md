@@ -31,7 +31,7 @@ The repo is connected to a Cloudflare Worker. Every push to `main` runs `npx wra
 which uploads `public/`. Dashboard build settings: **build command** empty,
 **deploy command** `npx wrangler deploy`, **root directory** `/`.
 
-The Worker's name in the Cloudflare dashboard must match `name` in `wrangler.toml` (`kusotph-site`).
+The Worker's name in the Cloudflare dashboard must match `name` in `wrangler.toml` (`kusotph`).
 
 ## After editing
 

@@ -1,4 +1,4 @@
-name = "kusotph-site"
+name = "kusotph"
 compatibility_date = "2026-09-01"
 
 # Static site only: serve everything in ./public. _headers in that folder still applies.

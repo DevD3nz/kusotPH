@@ -10,8 +10,8 @@ kusotphsite/
 ├── public/            ← everything that gets deployed
 │   ├── index.html     page content and story copy
 │   ├── styles.css
-│   ├── main.js        scroll effects and card tilt
-│   ├── scene.js       3D washer (Three.js from cdn.jsdelivr.net)
+│   ├── main.js        scroll keyframes, kinetic type, wave dividers, card tilt
+│   ├── scene.js       3D washer, phone, morphing blob, scroll-driven camera (Three.js from cdn.jsdelivr.net)
 │   ├── _headers       security headers + cache rules
 │   └── robots.txt
 └── wrangler.toml

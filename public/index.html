@@ -15,9 +15,9 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="/styles.css?v=7">
-  <script type="module" src="/main.js?v=5"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="/styles.css?v=8">
+  <script type="module" src="/main.js?v=6"></script>
 </head>
 <body>
   <canvas id="scene" aria-hidden="true"></canvas>
@@ -67,6 +67,7 @@
 
     <!-- STORY -->
     <section class="story" id="story" data-scene="story">
+      <svg class="divider" viewBox="0 0 1000 80" preserveAspectRatio="none" aria-hidden="true" style="--df:rgba(45,212,191,.05);--dc:rgba(45,212,191,.45)"><path class="df" d="M0 80 L1000 80 Z"/><path class="dl" d="M0 40 L1000 40"/></svg>
       <div class="wrap">
         <header class="section-head reveal">
           <p class="kicker">The story</p>
@@ -114,6 +115,7 @@
           </li>
 
           <li class="chapter chapter-turn reveal" data-scene="turn">
+            <div class="morph morph-amber" aria-hidden="true"></div>
             <span class="chapter-no" aria-hidden="true">03</span>
             <div class="chapter-body">
               <p class="turn-kicker">Then I thought about it from the shop's side of the counter.</p>
@@ -197,6 +199,8 @@
 
     <!-- ORDER CYCLE -->
     <section class="cycle" id="cycle" data-scene="cycle">
+      <svg class="divider" viewBox="0 0 1000 80" preserveAspectRatio="none" aria-hidden="true" style="--df:rgba(96,165,250,.05);--dc:rgba(96,165,250,.45)"><path class="df" d="M0 80 L1000 80 Z"/><path class="dl" d="M0 40 L1000 40"/></svg>
+      <div class="morph morph-teal" aria-hidden="true"></div>
       <div class="wrap">
         <header class="section-head reveal">
           <p class="kicker">How it works</p>
@@ -316,6 +320,8 @@
 
     <!-- SAY HI -->
     <section class="demo" id="demo" data-scene="demo">
+      <svg class="divider" viewBox="0 0 1000 80" preserveAspectRatio="none" aria-hidden="true" style="--df:rgba(251,191,36,.04);--dc:rgba(251,191,36,.45)"><path class="df" d="M0 80 L1000 80 Z"/><path class="dl" d="M0 40 L1000 40"/></svg>
+      <div class="morph morph-sky" aria-hidden="true"></div>
       <div class="wrap demo-grid">
         <div class="demo-copy reveal">
           <p class="kicker">That's the story</p>

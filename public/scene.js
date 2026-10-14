@@ -1,21 +1,29 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js';
 
-// Where the washer sits, how fast it spins and how bright the canvas is, per page section.
-// x is a fraction of the visible half-width; y is world units. On narrow screens the washer stays centered.
+// One keyframe per page section. The page scroll blends between neighbouring keyframes,
+// so the camera and the washer move continuously instead of snapping per section.
+//   x       washer x as a fraction of the visible half-width (world units on phones: always 0)
+//   y       washer y in world units
+//   orbit   camera orbit angle around the scene centre (radians)
+//   camY    camera height
+//   camZ    camera distance multiplier (dolly)
+//   blob    size of the morphing blob behind the washer (0 = hidden)
+//   warm    blob colour: 0 = teal, 1 = amber
+//   phone   size of the floating phone (0 = hidden)
 const STATES = {
-  hero:     { x: 0.6,   y: 0.05, rotY: -0.55, rotX: 0.08, scale: 1.0,  spin: 1.4, tickets: 1, ready: 0, dim: 1 },
-  story:    { x: 0.62,  y: 0.0,  rotY: -0.95, rotX: 0.14, scale: 0.85, spin: 0.35, tickets: 0, ready: 0, dim: 0.55 },
-  turn:     { x: -0.62, y: 0.2,  rotY: 0.85,  rotX: 0.1,  scale: 0.8,  spin: 0.2, tickets: 0, ready: 0, dim: 0.4 },
-  answer:   { x: 0.6,   y: 0.1,  rotY: -0.7,  rotX: 0.06, scale: 0.9,  spin: 2.4, tickets: 1, ready: 1, dim: 0.6 },
-  owner:    { x: -0.6,  y: 0.0,  rotY: 0.7,   rotX: 0.1,  scale: 0.85, spin: 1.2, tickets: 1, ready: 1, dim: 0.5 },
-  cycle:    { x: 0,     y: 2.3,  rotY: -0.2,  rotX: 0.5,  scale: 0.6,  spin: 3.4, tickets: 0, ready: 0, dim: 0.28 },
-  features: { x: 0.66,  y: -1.2, rotY: -1.2,  rotX: 0.2,  scale: 0.7,  spin: 1.6, tickets: 0, ready: 1, dim: 0.25 },
-  demo:     { x: 0.6,   y: -0.4, rotY: -0.65, rotX: 0.08, scale: 0.85, spin: 2.0, tickets: 0, ready: 1, dim: 0.35 },
+  hero:     { x: 0.6,   y: 0.05, rotY: -0.55, rotX: 0.08, scale: 1.0,  spin: 1.4, tickets: 1, ready: 0, dim: 1,    orbit: -0.05, camY: 0.3,  camZ: 1.0,  blob: 1.0,  warm: 0,   phone: 0 },
+  story:    { x: 0.62,  y: 0.0,  rotY: -0.95, rotX: 0.14, scale: 0.85, spin: 0.35, tickets: 0, ready: 0, dim: 0.55, orbit: -0.16, camY: 0.7,  camZ: 1.08, blob: 0.45, warm: 0,   phone: 0 },
+  turn:     { x: -0.62, y: 0.2,  rotY: 0.85,  rotX: 0.1,  scale: 0.8,  spin: 0.2, tickets: 0, ready: 0, dim: 0.4,  orbit: 0.2,   camY: 0.15, camZ: 1.16, blob: 0.7,  warm: 1,   phone: 0 },
+  answer:   { x: 0.6,   y: 0.1,  rotY: -0.7,  rotX: 0.06, scale: 0.9,  spin: 2.4, tickets: 1, ready: 1, dim: 0.6,  orbit: -0.12, camY: 0.1,  camZ: 1.0,  blob: 0.3,  warm: 0,   phone: 1 },
+  owner:    { x: -0.6,  y: 0.0,  rotY: 0.7,   rotX: 0.1,  scale: 0.85, spin: 1.2, tickets: 1, ready: 1, dim: 0.5,  orbit: 0.16,  camY: 0.55, camZ: 1.05, blob: 0.2,  warm: 0.5, phone: 0.6 },
+  cycle:    { x: 0,     y: 2.3,  rotY: -0.2,  rotX: 0.5,  scale: 0.6,  spin: 3.4, tickets: 0, ready: 0, dim: 0.28, orbit: 0.0,   camY: -0.3, camZ: 1.22, blob: 0,    warm: 0,   phone: 0 },
+  features: { x: 0.66,  y: -1.2, rotY: -1.2,  rotX: 0.2,  scale: 0.7,  spin: 1.6, tickets: 0, ready: 1, dim: 0.25, orbit: -0.22, camY: 0.3,  camZ: 1.1,  blob: 0.35, warm: 0.3, phone: 0 },
+  demo:     { x: 0.6,   y: -0.4, rotY: -0.65, rotX: 0.08, scale: 0.85, spin: 2.0, tickets: 0, ready: 1, dim: 0.35, orbit: -0.1,  camY: 0.2,  camZ: 1.0,  blob: 0.5,  warm: 0.6, phone: 1 },
 };
 
 const MOBILE_Y = { hero: 2.05 };
 
-function roundedBox(w, h, d, r, hole) {
+function roundedBox(w, h, d, r, hole, bevel = 0.09) {
   const s = new THREE.Shape();
   const x = -w / 2 + r, y = -h / 2 + r, iw = w - 2 * r, ih = h - 2 * r;
   s.moveTo(x, y - r);
@@ -32,7 +40,6 @@ function roundedBox(w, h, d, r, hole) {
     p.absarc(hole.x, hole.y, hole.r, 0, Math.PI * 2, true);
     s.holes.push(p);
   }
-  const bevel = 0.09;
   const g = new THREE.ExtrudeGeometry(s, {
     depth: d - bevel * 2, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel,
     bevelSegments: 5, curveSegments: 10,
@@ -84,6 +91,43 @@ function displayTexture() {
   });
 }
 
+// The customer's phone: a tracking page with the order marked Ready and the SMS on top.
+function phoneTexture() {
+  return canvasTexture(512, 1024, (ctx, w, h) => {
+    ctx.fillStyle = '#0b1220'; ctx.fillRect(0, 0, w, h);
+    // status bar
+    ctx.fillStyle = '#94a3b8'; ctx.font = '600 24px Inter, sans-serif';
+    ctx.fillText('4:31', 40, 58); ctx.textAlign = 'right'; ctx.fillText('●●● ▮', w - 40, 58); ctx.textAlign = 'left';
+    // SMS notification
+    rr(ctx, 32, 92, w - 64, 170, 28); ctx.fillStyle = '#16233a'; ctx.fill();
+    ctx.fillStyle = '#2dd4bf'; ctx.font = '700 20px Inter, sans-serif'; ctx.fillText('SMS · now', 60, 136);
+    ctx.fillStyle = '#e9f1f6'; ctx.font = '500 25px Inter, sans-serif';
+    ctx.fillText('Hi Ana, order #ORD-0247 is', 60, 182);
+    ctx.fillText('ready for pickup at Main', 60, 216);
+    ctx.fillText('Branch. — KusotPh', 60, 250);
+    // tracking card
+    rr(ctx, 32, 300, w - 64, 560, 32); ctx.fillStyle = '#0e1828'; ctx.fill();
+    ctx.strokeStyle = 'rgba(148,184,204,.25)'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = '#95a7ba'; ctx.font = '600 20px Inter, sans-serif'; ctx.fillText('ORDER', 72, 352);
+    ctx.fillStyle = '#e9f1f6'; ctx.font = '800 44px "Bricolage Grotesque", sans-serif'; ctx.fillText('#ORD-0247', 72, 404);
+    const steps = ['Received', 'Washing', 'Drying', 'Ready'];
+    steps.forEach((s, i) => {
+      const y = 470 + i * 80;
+      const now = i === 3;
+      ctx.beginPath(); ctx.arc(96, y - 10, 16, 0, Math.PI * 2);
+      ctx.fillStyle = now ? '#fbbf24' : '#2dd4bf'; ctx.fill();
+      if (i < 3) { ctx.fillStyle = 'rgba(45,212,191,.4)'; ctx.fillRect(94, y + 8, 4, 44); }
+      ctx.fillStyle = now ? '#fbbf24' : '#cfdbe6'; ctx.font = `${now ? 800 : 500} 28px Inter, sans-serif`;
+      ctx.fillText(s, 136, y);
+    });
+    rr(ctx, 72, 770, w - 144, 60, 30); ctx.fillStyle = 'rgba(251,191,36,.14)'; ctx.fill();
+    ctx.fillStyle = '#fbbf24'; ctx.font = '700 24px Inter, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Ready by  Today, 4:30 PM', w / 2, 810); ctx.textAlign = 'left';
+    // home bar
+    rr(ctx, w / 2 - 70, h - 40, 140, 8, 4); ctx.fillStyle = '#334155'; ctx.fill();
+  });
+}
+
 function shadowTexture() {
   return canvasTexture(256, 256, (ctx, w, h) => {
     const g = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w / 2);
@@ -112,9 +156,101 @@ function buildEnvironment(renderer) {
   return tex;
 }
 
+// ---- Morphing blob: a sphere displaced by 3D simplex noise in the vertex shader ----
+const NOISE_GLSL = /* glsl */`
+vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec4 permute(vec4 x) { return mod289(((x * 34.0) + 1.0) * x); }
+vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+float snoise(vec3 v) {
+  const vec2 C = vec2(1.0 / 6.0, 1.0 / 3.0);
+  const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+  vec3 i = floor(v + dot(v, C.yyy));
+  vec3 x0 = v - i + dot(i, C.xxx);
+  vec3 g = step(x0.yzx, x0.xyz);
+  vec3 l = 1.0 - g;
+  vec3 i1 = min(g.xyz, l.zxy);
+  vec3 i2 = max(g.xyz, l.zxy);
+  vec3 x1 = x0 - i1 + C.xxx;
+  vec3 x2 = x0 - i2 + C.yyy;
+  vec3 x3 = x0 - D.yyy;
+  i = mod289(i);
+  vec4 p = permute(permute(permute(i.z + vec4(0.0, i1.z, i2.z, 1.0)) + i.y + vec4(0.0, i1.y, i2.y, 1.0)) + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+  float n_ = 0.142857142857;
+  vec3 ns = n_ * D.wyz - D.xzx;
+  vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+  vec4 x_ = floor(j * ns.z);
+  vec4 y_ = floor(j - 7.0 * x_);
+  vec4 x = x_ * ns.x + ns.yyyy;
+  vec4 y = y_ * ns.x + ns.yyyy;
+  vec4 h = 1.0 - abs(x) - abs(y);
+  vec4 b0 = vec4(x.xy, y.xy);
+  vec4 b1 = vec4(x.zw, y.zw);
+  vec4 s0 = floor(b0) * 2.0 + 1.0;
+  vec4 s1 = floor(b1) * 2.0 + 1.0;
+  vec4 sh = -step(h, vec4(0.0));
+  vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
+  vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
+  vec3 p0 = vec3(a0.xy, h.x);
+  vec3 p1 = vec3(a0.zw, h.y);
+  vec3 p2 = vec3(a1.xy, h.z);
+  vec3 p3 = vec3(a1.zw, h.w);
+  vec4 norm = taylorInvSqrt(vec4(dot(p0, p0), dot(p1, p1), dot(p2, p2), dot(p3, p3)));
+  p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+  vec4 m = max(0.6 - vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), 0.0);
+  m = m * m;
+  return 42.0 * dot(m * m, vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3)));
+}`;
+
+const BLOB_VERT = /* glsl */`
+uniform float uTime;
+uniform float uAmp;
+varying vec3 vNormal;
+varying vec3 vView;
+varying float vDisp;
+${NOISE_GLSL}
+float field(vec3 p) {
+  return snoise(p * 1.15 + uTime * 0.18) * 0.7 + snoise(p * 2.6 - uTime * 0.11) * 0.3;
+}
+void main() {
+  float d = field(position);
+  vec3 pos = position + normal * d * uAmp;
+  // Recompute the normal from neighbouring displaced points so the lighting follows the morph.
+  float e = 0.08;
+  vec3 t = normalize(cross(normal, vec3(0.0, 1.0, 0.0) + vec3(0.001)));
+  vec3 b = normalize(cross(normal, t));
+  vec3 p1 = position + t * e; p1 += normal * field(p1) * uAmp;
+  vec3 p2 = position + b * e; p2 += normal * field(p2) * uAmp;
+  vec3 n = normalize(cross(p1 - pos, p2 - pos));
+  if (dot(n, normal) < 0.0) n = -n;
+  vNormal = normalize(normalMatrix * n);
+  vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+  vView = normalize(-mv.xyz);
+  vDisp = d;
+  gl_Position = projectionMatrix * mv;
+}`;
+
+const BLOB_FRAG = /* glsl */`
+uniform vec3 uColorA;
+uniform vec3 uColorB;
+uniform vec3 uColorC;
+uniform float uOpacity;
+varying vec3 vNormal;
+varying vec3 vView;
+varying float vDisp;
+void main() {
+  float fresnel = pow(1.0 - max(dot(vNormal, vView), 0.0), 2.2);
+  float light = max(dot(vNormal, normalize(vec3(0.5, 0.8, 0.6))), 0.0);
+  vec3 base = mix(uColorA, uColorB, smoothstep(-0.6, 0.7, vDisp));
+  vec3 col = base * (0.25 + light * 0.55) + uColorC * fresnel * 1.4;
+  float alpha = (0.55 + fresnel * 0.45) * uOpacity;
+  gl_FragColor = vec4(col, alpha);
+}`;
+
 export function initScene(canvas, { reducedMotion = false } = {}) {
+  const narrow = window.innerWidth < 900;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, narrow ? 1.5 : 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
@@ -269,6 +405,52 @@ export function initScene(canvas, { reducedMotion = false } = {}) {
     return m;
   });
 
+  // ---- The customer's phone ----
+  const phone = new THREE.Group();
+  const PW = 0.92, PH = 1.9;
+  phone.add(new THREE.Mesh(
+    roundedBox(PW, PH, 0.1, 0.14, null, 0.025),
+    new THREE.MeshPhysicalMaterial({ color: 0x111827, roughness: 0.3, metalness: 0.6, clearcoat: 1, clearcoatRoughness: 0.1 }),
+  ));
+  const phoneScreen = new THREE.Mesh(
+    new THREE.PlaneGeometry(PW - 0.1, PH - 0.1),
+    new THREE.MeshBasicMaterial({ map: phoneTexture(), toneMapped: false }),
+  );
+  phoneScreen.position.z = 0.052;
+  phone.add(phoneScreen);
+  const phoneGlow = new THREE.PointLight(0x5eead4, 4, 2.5);
+  phoneGlow.position.set(0, 0, 0.5);
+  phone.add(phoneGlow);
+  phone.userData.base = new THREE.Vector3(1.75, -0.85, 1.4);
+  phone.position.copy(phone.userData.base);
+  phone.rotation.set(0.05, -0.5, 0.05);
+  phone.visible = false;
+  rig.add(phone);
+
+  // ---- Morphing blob ----
+  const blobMat = new THREE.ShaderMaterial({
+    vertexShader: BLOB_VERT,
+    fragmentShader: BLOB_FRAG,
+    transparent: true,
+    depthWrite: false,
+    uniforms: {
+      uTime: { value: 0 },
+      uAmp: { value: 0.32 },
+      uOpacity: { value: 1 },
+      uColorA: { value: new THREE.Color(0x0d9488) },
+      uColorB: { value: new THREE.Color(0x2dd4bf) },
+      uColorC: { value: new THREE.Color(0x99f6e4) },
+    },
+  });
+  const blob = new THREE.Mesh(
+    new THREE.SphereGeometry(1, narrow ? 72 : 128, narrow ? 54 : 96),
+    blobMat,
+  );
+  blob.position.set(-3.2, 0.8, -3.5);
+  scene.add(blob);
+  const TEAL = { a: new THREE.Color(0x0d9488), b: new THREE.Color(0x2dd4bf), c: new THREE.Color(0x99f6e4) };
+  const AMBER = { a: new THREE.Color(0xb45309), b: new THREE.Color(0xfbbf24), c: new THREE.Color(0xfde68a) };
+
   // ---- Bubbles ----
   const BUBBLES = window.innerWidth < 720 ? 30 : 60;
   const bubbleMat = new THREE.MeshPhysicalMaterial({
@@ -289,34 +471,47 @@ export function initScene(canvas, { reducedMotion = false } = {}) {
   // ---- State & animation ----
   const cur = { ...STATES.hero };
   let target = { ...STATES.hero };
-  let sceneName = 'hero';
+  let blend = { from: 'hero', to: 'hero', t: 0 };
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
   let mobile = false;
+  let baseZ = 11;
 
   function resize() {
     const w = window.innerWidth, h = window.innerHeight;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     mobile = w < 900;
-    camera.position.z = mobile ? 13.5 : 11;
+    baseZ = mobile ? 13.5 : 11;
     camera.fov = mobile ? 38 : 32;
     camera.updateProjectionMatrix();
     applyTarget();
   }
 
-  function applyTarget() {
-    const s = STATES[sceneName] || STATES.hero;
-    target = { ...s };
+  // Turn a named keyframe into concrete world values for the current viewport.
+  function resolve(name) {
+    const s = STATES[name] || STATES.hero;
+    const r = { ...s };
     if (!mobile) {
-      const halfW = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z * camera.aspect;
-      target.x = s.x * halfW;
-      target.scale = s.scale * THREE.MathUtils.clamp(halfW / 5.6, 0.68, 1);
+      const halfW = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * baseZ * camera.aspect;
+      r.x = s.x * halfW;
+      r.scale = s.scale * THREE.MathUtils.clamp(halfW / 5.6, 0.68, 1);
     } else {
-      target.x = 0;
-      target.y = MOBILE_Y[sceneName] ?? 0.4;
-      target.dim = sceneName === 'hero' ? 0.9 : Math.min(s.dim, 0.3);
-      target.scale = s.scale * 0.85;
+      r.x = 0;
+      r.y = MOBILE_Y[name] ?? 0.4;
+      r.dim = name === 'hero' ? 0.9 : Math.min(s.dim, 0.3);
+      r.scale = s.scale * 0.85;
+      r.orbit = s.orbit * 0.5;
+      r.blob = s.blob * 0.8;
+      r.phone = name === 'hero' ? 0 : s.phone;
     }
+    return r;
+  }
+
+  function applyTarget() {
+    const a = resolve(blend.from), b = resolve(blend.to);
+    const t = blend.t;
+    target = {};
+    for (const k in a) target[k] = a[k] + (b[k] - a[k]) * t;
   }
 
   window.addEventListener('resize', resize);
@@ -335,7 +530,7 @@ export function initScene(canvas, { reducedMotion = false } = {}) {
     const motion = reducedMotion ? 0 : 1;
     t += dt * motion;
 
-    const k = 1 - Math.exp(-dt * 2.6);
+    const k = 1 - Math.exp(-dt * 3.2);
     for (const key in target) cur[key] += (target[key] - cur[key]) * k;
     pointer.x += (pointer.tx - pointer.x) * k;
     pointer.y += (pointer.ty - pointer.y) * k;
@@ -364,6 +559,39 @@ export function initScene(canvas, { reducedMotion = false } = {}) {
       m.visible = cur.tickets > 0.02;
     });
 
+    // Phone pops in with a little overshoot, then floats.
+    const ps = cur.phone;
+    phone.visible = ps > 0.02;
+    if (phone.visible) {
+      const ease = ps < 1 ? 1 - Math.pow(1 - ps, 3) : 1;
+      phone.scale.setScalar(ease * (mobile ? 0.75 : 0.9));
+      const b = phone.userData.base;
+      phone.position.set(
+        (mobile ? 1.6 : b.x) + (1 - ease) * 0.6,
+        (mobile ? -1.3 : b.y) + Math.sin(t * 1.1 + 1.3) * 0.1,
+        b.z,
+      );
+      phone.rotation.y = (mobile ? -0.35 : -0.5) + Math.sin(t * 0.5) * 0.08 + pointer.x * 0.12;
+      phone.rotation.x = 0.05 + pointer.y * 0.06;
+      phoneGlow.intensity = 4 * ease;
+    }
+
+    // Blob: morphs continuously; size and colour follow the scroll keyframes.
+    const bs = cur.blob;
+    blob.visible = bs > 0.02;
+    if (blob.visible) {
+      blobMat.uniforms.uTime.value = t;
+      blobMat.uniforms.uOpacity.value = Math.min(bs * 1.4, 1) * 0.85;
+      const size = (mobile ? 1.7 : 2.8) * (0.5 + bs * 0.5);
+      blob.scale.setScalar(size);
+      if (mobile) blob.position.set(0.3 + Math.sin(t * 0.3) * 0.3, 3.1 + Math.sin(t * 0.45) * 0.2, -4.5);
+      else blob.position.set(cur.x * 0.8 + Math.sin(t * 0.3) * 0.3, cur.y * 0.6 + 1.1 + Math.sin(t * 0.45) * 0.2, -3.8);
+      blob.rotation.y = t * 0.08;
+      blobMat.uniforms.uColorA.value.lerpColors(TEAL.a, AMBER.a, cur.warm);
+      blobMat.uniforms.uColorB.value.lerpColors(TEAL.b, AMBER.b, cur.warm);
+      blobMat.uniforms.uColorC.value.lerpColors(TEAL.c, AMBER.c, cur.warm);
+    }
+
     for (let i = 0; i < BUBBLES; i++) {
       const b = bData[i];
       b.y += b.v * dt * motion;
@@ -375,8 +603,11 @@ export function initScene(canvas, { reducedMotion = false } = {}) {
     }
     bubbles.instanceMatrix.needsUpdate = true;
 
-    camera.position.x = pointer.x * 0.25;
-    camera.position.y = 0.3 - pointer.y * 0.15;
+    // Camera: orbit + dolly from the keyframes, plus a little pointer parallax.
+    const dist = baseZ * cur.camZ;
+    camera.position.x = Math.sin(cur.orbit) * dist + pointer.x * 0.25;
+    camera.position.z = Math.cos(cur.orbit) * dist;
+    camera.position.y = cur.camY - pointer.y * 0.15;
     camera.lookAt(0, 0, 0);
 
     canvas.style.opacity = cur.dim.toFixed(3);
@@ -394,10 +625,13 @@ export function initScene(canvas, { reducedMotion = false } = {}) {
   requestAnimationFrame(frame);
 
   return {
-    setScene(name) {
-      if (!STATES[name] || name === sceneName) return;
-      sceneName = name;
+    // Blend between two keyframes; t is 0..1 from `from` to `to`.
+    setBlend(from, to, t) {
+      if (!STATES[from]) from = 'hero';
+      if (!STATES[to]) to = from;
+      blend = { from, to, t: THREE.MathUtils.clamp(t, 0, 1) };
       applyTarget();
     },
+    setScene(name) { this.setBlend(name, name, 0); },
   };
 }

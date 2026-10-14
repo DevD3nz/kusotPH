@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KusotPh: laundry shop software for the Philippines</title>
-  <meta name="description" content="KusotPh tells your customers exactly when their laundry will be ready, and texts them the moment it is. Orders, cash drawer, staff and branches, all from the phones your shop already has.">
+  <title>KusotPh: why I built laundry shop software</title>
+  <meta name="description" content="The story behind KusotPh, a laundry shop system built by a customer who got tired of asking “Ready na po ba?” Why it exists, what it turned into, and how to reach the developer if your shop wants it.">
   <meta name="theme-color" content="#060b14">
   <meta name="color-scheme" content="dark">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="KusotPh: no more guessing when the laundry is ready">
-  <meta property="og:description" content="Laundry shop software built by a customer who got tired of asking “Ready na po ba?”">
+  <meta property="og:title" content="KusotPh: one laundry stub too many">
+  <meta property="og:description" content="Why a customer who never knew when his laundry would be ready ended up building laundry shop software.">
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="/styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=7">
   <script type="module" src="/main.js?v=5"></script>
 </head>
 <body>
@@ -32,33 +32,33 @@
     <nav class="nav-links" aria-label="Main">
       <a href="#story">The story</a>
       <a href="#cycle">How it works</a>
-      <a href="#features">Features</a>
-      <a href="#faq">FAQ</a>
+      <a href="#features">What's inside</a>
+      <a href="#faq">Questions</a>
     </nav>
-    <a class="btn btn-sm" href="#demo">Get a demo</a>
+    <a class="btn btn-sm" href="#demo">Say hi</a>
   </header>
 
   <main id="top">
     <!-- HERO -->
     <section class="hero" data-scene="hero">
       <div class="wrap hero-inner">
-        <p class="eyebrow reveal"><span class="pulse"></span> Laundry shop software · Made in the Philippines</p>
+        <p class="eyebrow reveal"><span class="pulse"></span> A side project · Made in the Philippines</p>
         <h1 class="reveal">
           <span class="line">“Ready na po ba</span>
           <span class="line">ang laundry ko?”</span>
         </h1>
         <p class="lede reveal">
-          Your customers ask it every day, because nobody told them when.
-          KusotPh gives every load a <strong>ready-by time</strong>, a <strong>live status link</strong>,
-          and a <strong>text the moment it's done</strong>. Your counter gets fewer calls and your shelves fewer forgotten bags.
+          I asked my laundry shop that question one time too many. So I built KusotPh:
+          a small system that gives every load a <strong>ready-by time</strong>, a <strong>live status link</strong>,
+          and a <strong>text when it's done</strong>. This page is the story of why, and what it turned into.
         </p>
         <div class="cta-row reveal">
-          <a class="btn" href="#demo">Get a free demo <span aria-hidden="true">→</span></a>
-          <a class="btn btn-ghost" href="#story">Read why I built it</a>
+          <a class="btn" href="#story">Read the story <span aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="#cycle">See what I built</a>
         </div>
         <ul class="chips reveal" aria-label="Highlights">
+          <li>Built by one developer</li>
           <li>Runs on any phone, no POS hardware</li>
-          <li>Cash, GCash &amp; bank payments</li>
           <li>One shop or many branches</li>
         </ul>
       </div>
@@ -116,14 +116,14 @@
           <li class="chapter chapter-turn reveal" data-scene="turn">
             <span class="chapter-no" aria-hidden="true">03</span>
             <div class="chapter-body">
-              <p class="turn-kicker">Now look at it from your side of the counter.</p>
-              <h3>Every customer like me costs your shop something.</h3>
+              <p class="turn-kicker">Then I thought about it from the shop's side of the counter.</p>
+              <h3>Every customer like me costs a shop something.</h3>
               <ul class="costs">
-                <li><b>A phone call</b> your attendant answers while a load waits to be folded.</li>
+                <li><b>A phone call</b> the staff answers while a load waits to be folded.</li>
                 <li><b>A bag on the shelf</b> that nobody comes back for, taking up space for weeks.</li>
-                <li><b>A customer who quietly tries</b> the shop down the street next time, and never tells you why.</li>
+                <li><b>A customer who quietly tries</b> the shop down the street next time, and never says why.</li>
               </ul>
-              <p>You won't see it in your sales. You'll just have fewer <em>suki</em> than you should.</p>
+              <p>None of it shows up in sales. The shop just ends up with fewer <em>suki</em> than it should.</p>
             </div>
           </li>
 
@@ -133,23 +133,23 @@
               <h3>So I built the shop I wished I'd walked into.</h3>
               <p>
                 <em>Kusot</em> is how we scrub clothes by hand: simple, hands-on, done by the person at the tub.
-                KusotPh works the same way. Your attendant takes the order on a phone, and from that moment
+                KusotPh works the same way. The staff takes the order on a phone, and from that moment
                 the customer knows what's happening:
               </p>
               <ul class="ticks">
                 <li><b>A ready-by time</b> printed on every claim ticket.</li>
                 <li><b>A live receipt link</b> that shows Received → Washing → Drying → Ready.</li>
-                <li><b>A text the moment it's Ready</b>, plus reminders if the bag is still waiting after 3, 7 and 30 days.</li>
+                <li><b>A text the moment it's Ready</b>, and for pickup orders, reminders if the bag is still waiting after 3, 7 and 30 days.</li>
               </ul>
             </div>
             <figure class="prop prop-phone" aria-label="A phone showing the order is ready with a text notification">
               <div class="phone">
                 <div class="notif">
                   <span class="notif-app">SMS · now</span>
-                  <span>Hi Ana! Your laundry #B1-0247 is <b>READY</b> for pickup. Balance: ₱0.00. Salamat! – KusotPh</span>
+                  <span>Hi Ana, order #ORD-0247 is <b>ready</b> for pickup at Main Branch. — KusotPh</span>
                 </div>
                 <div class="track">
-                  <span class="track-title">Order #B1-0247</span>
+                  <span class="track-title">Order #ORD-0247</span>
                   <ol>
                     <li class="done">Received</li>
                     <li class="done">Washing</li>
@@ -165,11 +165,11 @@
           <li class="chapter reveal" data-scene="owner">
             <span class="chapter-no" aria-hidden="true">05</span>
             <div class="chapter-body">
-              <h3>Then I built the rest of your shop around it.</h3>
+              <h3>Then I built the rest of the shop around it.</h3>
               <p>
                 Clear updates for customers need clean records behind the counter. So KusotPh also keeps the
-                cash drawer honest, tracks who worked which shift, and lets you see every branch from your phone,
-                without driving between them to ask.
+                cash drawer honest, tracks who worked which shift, and lets an owner see every branch from a phone
+                instead of driving between them to ask.
               </p>
               <a class="text-link" href="#cycle">See how an order moves <span aria-hidden="true">→</span></a>
             </div>
@@ -183,12 +183,12 @@
             <h3 id="maker-title">Just me. One developer, one laundry stub too many.</h3>
             <p>
               KusotPh isn't made by a big company. I'm a solo developer, and I built this because I was the customer
-              who never knew when my laundry would be ready. When you message, you talk to the person who wrote
-              the code, and your feedback can show up in the app.
+              who never knew when my laundry would be ready. The problem is everywhere, and the fix turned out to be small.
+              If you message, you talk to the person who wrote the code.
             </p>
             <a class="btn btn-fb" href="https://www.facebook.com/D3nzD3vt3st/" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
-              Message me on Facebook
+              Say hi on Facebook
             </a>
           </div>
         </aside>
@@ -201,22 +201,23 @@
         <header class="section-head reveal">
           <p class="kicker">How it works</p>
           <h2>One board. Every load. Always in the right stage.</h2>
-          <p class="sub">Your attendants move each order along with a tap. The customer's link updates as they go.</p>
+          <p class="sub">Staff move each order along with a tap. The customer's link updates as they go.</p>
         </header>
 
-        <ol class="steps">
+        <ol class="steps steps-7">
           <li class="step tilt reveal" data-color="slate"><span class="step-no">0</span><h3>To collect</h3><p>Home pickup: a rider brings the dirty laundry in.</p></li>
           <li class="step tilt reveal" data-color="sky"><span class="step-no">1</span><h3>Received</h3><p>Weighed, priced, ticket printed with a ready-by time.</p></li>
           <li class="step tilt reveal" data-color="teal"><span class="step-no">2</span><h3>Washing</h3><p>In the machine. Flagged <em>Late</em> if the time passes.</p></li>
           <li class="step tilt reveal" data-color="violet"><span class="step-no">3</span><h3>Drying</h3><p>Almost there. The customer can see it too.</p></li>
-          <li class="step tilt reveal" data-color="amber"><span class="step-no">4</span><h3>Ready</h3><p>Customer gets a text. Reminders after 3, 7, 30 days.</p></li>
-          <li class="step tilt reveal" data-color="green"><span class="step-no">5</span><h3>Claimed / Delivered</h3><p>Released only once the balance is zero.</p></li>
+          <li class="step tilt reveal" data-color="amber"><span class="step-no">4</span><h3>Ready</h3><p>Customer gets a text. Pickup orders get reminders after 3, 7 and 30 days.</p></li>
+          <li class="step tilt reveal" data-color="rose"><span class="step-no">5</span><h3>Out for delivery</h3><p>A rider takes it. If nobody's home, it goes back to Ready and the attempt is counted.</p></li>
+          <li class="step tilt reveal" data-color="green"><span class="step-no">6</span><h3>Claimed / Delivered</h3><p>Staff release only when the balance is zero. The owner can override.</p></li>
         </ol>
 
         <ul class="rules reveal" aria-label="Built-in shop rules">
-          <li>Undo a step within 15 minutes</li>
+          <li>Staff can undo a step within 15 minutes; the owner any time</li>
           <li>Failed delivery goes back to Ready, attempt counted</li>
-          <li>Cancel only by owner or manager, with a reason</li>
+          <li>Cancel only by the owner, with a reason, before any payment is taken</li>
           <li>Decimal kilos or per piece, plus rush &amp; delivery fees</li>
         </ul>
       </div>
@@ -226,14 +227,14 @@
     <section class="features" id="features" data-scene="features">
       <div class="wrap">
         <header class="section-head reveal">
-          <p class="kicker">Behind the counter</p>
-          <h2>Everything an owner needs to stop guessing too.</h2>
+          <p class="kicker">What's inside</p>
+          <h2>What one laundry stub turned into.</h2>
         </header>
 
         <div class="bento">
           <article class="card card-xl tilt reveal">
             <h3>Command Center</h3>
-            <p>Collected today, unpaid balances, late orders and cash drawer differences, for every branch, on your phone.</p>
+            <p>Collected today, unpaid balances, late orders and cash drawer differences, for every branch, on the owner's phone.</p>
             <div class="mini-dash" aria-hidden="true">
               <div class="kpi"><span>Collected</span><b>₱18,420</b></div>
               <div class="kpi"><span>Unpaid</span><b>₱2,135</b></div>
@@ -244,7 +245,7 @@
 
           <article class="card tilt reveal">
             <h3>Cash drawer that adds up</h3>
-            <p>Opening cash + cash payments − drawer expenses, against what was counted. Any difference shows up on your dashboard.</p>
+            <p>Opening cash + cash payments − drawer expenses, against what was counted. Any difference shows up on the dashboard.</p>
             <div class="drawer" aria-hidden="true">
               <span><i>Expected</i><b>₱4,820</b></span>
               <span><i>Counted</i><b>₱4,480</b></span>
@@ -254,7 +255,7 @@
 
           <article class="card tilt reveal">
             <h3>Staff PIN &amp; timecards</h3>
-            <p>Attendants clock in with a PIN. The hours report estimates pay from each person's hourly or daily rate.</p>
+            <p>Staff clock in with a PIN. The hours report estimates pay from each person's hourly or daily rate.</p>
           </article>
 
           <article class="card tilt reveal">
@@ -269,7 +270,7 @@
 
           <article class="card tilt reveal">
             <h3>SMS updates</h3>
-            <p>Ready notices and unclaimed reminders, sent automatically. An optional add-on.</p>
+            <p>Texts when an order is received, washing and ready, plus unclaimed reminders. Goes through an SMS gateway, so it's switched on per shop.</p>
           </article>
 
           <article class="card tilt reveal">
@@ -279,16 +280,15 @@
 
           <article class="card tilt reveal">
             <h3>Expenses &amp; inventory</h3>
-            <p>LPG, detergent, salaries. Mark counter purchases as paid from the drawer so the count stays right.</p>
+            <p>LPG, detergent, salaries. Counter purchases can be marked as paid from the drawer so the count stays right.</p>
           </article>
         </div>
 
         <div class="roles reveal">
-          <p>Made for everyone in the shop:</p>
+          <p>Everyone in the shop has a place in it:</p>
           <ul>
             <li><b>Owner</b> sees everything</li>
-            <li><b>Manager</b> runs their branches</li>
-            <li><b>Attendant</b> takes orders &amp; payments</li>
+            <li><b>Staff</b> takes orders &amp; payments at the counter</li>
             <li><b>Rider</b> pickups &amp; deliveries</li>
             <li><b>Customer</b> ticket, link &amp; texts</li>
           </ul>
@@ -296,53 +296,53 @@
       </div>
     </section>
 
-    <!-- SETUP -->
+    <!-- UNDER THE HOOD -->
     <section class="editions" data-scene="features">
       <div class="wrap">
         <div class="edition edition-hi tilt reveal">
           <div>
-            <p class="kicker">Your own system</p>
-            <h2>Set up for your laundry business only.</h2>
-            <p>KusotPh is installed for your shop, not shared with anyone else's. One shop or several branches, under one owner account.</p>
+            <p class="kicker">Under the hood</p>
+            <h2>A phone app that's really a website.</h2>
+            <p>KusotPh is a progressive web app: a Laravel API with a React front end, installed to the home screen like an app. It's set up for one shop, with one or several branches under one owner account.</p>
           </div>
           <ul class="ticks">
-            <li>Your shop's data, separate from other businesses</li>
-            <li>I set it up with your branches, staff and price list</li>
-            <li>Your team signs in from any phone</li>
+            <li>Works on any phone or tablet; a thermal printer is optional</li>
+            <li>One shop per install, so its data stays its own</li>
+            <li>Staff sign in with a PIN at the counter</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- DEMO FORM -->
+    <!-- SAY HI -->
     <section class="demo" id="demo" data-scene="demo">
       <div class="wrap demo-grid">
         <div class="demo-copy reveal">
-          <p class="kicker">Get a demo</p>
-          <h2>Let your customers stop asking.</h2>
+          <p class="kicker">That's the story</p>
+          <h2>Sound like your counter too?</h2>
           <p>
-            Message me on Facebook and tell me about your shop. I'll walk you through KusotPh
-            using your own price list, on a phone, in about 20 minutes. Taglish is fine.
+            I made this page to tell the story behind KusotPh. If you run a laundry shop and this sounds familiar,
+            message me on Facebook. I'm happy to show it to you on a phone, using your own price list, and hear what you'd change.
           </p>
           <ul class="ticks">
-            <li>Free, no commitment</li>
-            <li>You talk to me directly, the developer who built it</li>
+            <li>No commitment, you talk to the developer directly</li>
+            <li>Taglish is fine</li>
             <li>Works for one shop or many branches</li>
           </ul>
           <a class="btn btn-fb btn-lg" href="https://www.facebook.com/D3nzD3vt3st/" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
-            Message me for a demo
+            Message me on Facebook
           </a>
         </div>
 
-        <figure class="chat-card reveal" aria-label="Example message asking for a demo">
+        <figure class="chat-card reveal" aria-label="Example message after reading the story">
           <div class="chat-head">
             <span class="chat-avatar" aria-hidden="true">👋</span>
             <span><b>KusotPh</b><i>Facebook Messenger</i></span>
           </div>
           <div class="chat-body">
-            <p class="msg msg-in">Hi po! Gusto ko po sanang makita yung KusotPh. May laundry shop po kami, 2 branches.</p>
-            <p class="msg msg-out">Hello! Sure po 😊 Ano pong oras kayo free? I'll show you on your phone using your own price list.</p>
+            <p class="msg msg-in">Hi po! Nabasa ko yung story. Ganyan din po sa laundry shop namin, laging tinatanong kung ready na.</p>
+            <p class="msg msg-out">Hello! Salamat po sa pagbasa 😊 Gusto n'yo po makita kung paano gumagana? Sa phone lang.</p>
             <p class="msg-hint">Tip: say how many branches you have and if you do home pickup.</p>
           </div>
         </figure>
@@ -354,13 +354,14 @@
       <div class="wrap narrow">
         <header class="section-head reveal">
           <p class="kicker">Questions</p>
-          <h2>Before you ask.</h2>
+          <h2>Things people ask.</h2>
         </header>
-        <details class="reveal"><summary>Do I need a computer or a POS machine?</summary><p>No. KusotPh runs in the browser on any phone or tablet and can be installed to the home screen like an app. A thermal printer is optional, for claim tickets.</p></details>
-        <details class="reveal"><summary>How do customers get the text when their laundry is ready?</summary><p>Through the SMS add-on. Once it's switched on for your shop, KusotPh texts customers when their order reaches Ready and reminds them if it's still unclaimed after 3, 7 and 30 days.</p></details>
-        <details class="reveal"><summary>Does it take GCash payments?</summary><p>KusotPh records payments made by cash, GCash, bank transfer or other methods against each order, including deposits and cash on delivery. It is not a payment gateway; your customers pay you directly the way they do now.</p></details>
-        <details class="reveal"><summary>I have more than one branch. Will it work?</summary><p>Yes. Each branch has its own orders, cash drawer and staff, and the owner sees all of them together in the Command Center.</p></details>
-        <details class="reveal"><summary>My attendants aren't techy.</summary><p>The order board is built for the counter: big buttons, PIN login, one tap to move a load to the next stage. I'll walk your team through it during setup.</p></details>
+        <details class="reveal"><summary>Can my shop use it?</summary><p>Yes. Message me on Facebook and tell me about your shop. I'll show you how it works on a phone and we can talk from there.</p></details>
+        <details class="reveal"><summary>Does it need a computer or a POS machine?</summary><p>No. KusotPh runs in the browser on any phone or tablet and can be installed to the home screen like an app. A thermal printer is optional, for claim tickets.</p></details>
+        <details class="reveal"><summary>How do customers get the text when their laundry is ready?</summary><p>Through an SMS gateway that's switched on per shop. Once it's on, KusotPh texts customers when their order is received, washing and ready, and reminds pickup customers if the bag is still unclaimed after 3, 7 and 30 days.</p></details>
+        <details class="reveal"><summary>Does it take GCash payments?</summary><p>It records payments made by cash, GCash, bank transfer or other methods against each order, including deposits and cash on delivery. It is not a payment gateway; customers pay the shop directly the way they do now.</p></details>
+        <details class="reveal"><summary>What about shops with more than one branch?</summary><p>Each branch has its own orders, cash drawer and staff, and the owner sees all of them together in the Command Center.</p></details>
+        <details class="reveal"><summary>What if the staff aren't techy?</summary><p>The order board is built for the counter: big buttons, PIN login, one tap to move a load to the next stage.</p></details>
       </div>
     </section>
   </main>
@@ -369,7 +370,7 @@
     <div class="wrap footer-inner">
       <a class="brand" href="#top"><img src="/favicon.svg" alt="" width="28" height="28"><span>Kusot<b>Ph</b></span></a>
       <p>Built by a solo developer who got tired of asking “Ready na po ba?”</p>
-      <a class="footer-fb" href="https://www.facebook.com/D3nzD3vt3st/" target="_blank" rel="noopener noreferrer">Message me on Facebook →</a>
+      <a class="footer-fb" href="https://www.facebook.com/D3nzD3vt3st/" target="_blank" rel="noopener noreferrer">Say hi on Facebook →</a>
       <p class="fine">© <span id="year">2026</span> KusotPh · Philippines</p>
     </div>
   </footer>

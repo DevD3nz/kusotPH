@@ -293,7 +293,8 @@ section { position: relative; padding: 110px 0; }
   perspective: 1200px;
 }
 @media (min-width: 640px) { .steps { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1000px) { .steps { grid-template-columns: repeat(6, 1fr); } }
+@media (min-width: 1000px) { .steps { grid-template-columns: repeat(6, 1fr); } .steps-7 { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1180px) { .steps-7 { grid-template-columns: repeat(7, 1fr); } }
 .step {
   --c: var(--teal);
   position: relative; padding: 22px 18px 24px; border-radius: 20px;
@@ -307,6 +308,10 @@ section { position: relative; padding: 110px 0; }
 .step[data-color="violet"] { --c: var(--violet); }
 .step[data-color="amber"] { --c: var(--amber); }
 .step[data-color="green"] { --c: var(--green); }
+.step[data-color="teal"] { --c: var(--teal); }
+.step[data-color="rose"] { --c: var(--rose); }
+
+
 .step-no {
   display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: 16px; border-radius: 10px;
   background: var(--c); color: #061018; font: 800 16px/1 var(--display);
@@ -434,3 +439,14 @@ section { position: relative; padding: 110px 0; }
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* Compact step rows on phones: number on the left, text on the right */
+@media (max-width: 639px) {
+  .steps { gap: 10px; }
+  .step { display: grid; grid-template-columns: 34px 1fr; column-gap: 14px; align-items: start; padding: 16px 16px 18px; }
+  .step .step-no { margin: 0; grid-row: 1 / span 2; }
+  .step h3 { grid-column: 2; margin: 6px 0 4px; }
+  .step p { grid-column: 2; margin: 0; }
+}
+/* Keep each hero line whole on wide screens */
+@media (min-width: 1100px) { .hero h1 .line { white-space: nowrap; } }
